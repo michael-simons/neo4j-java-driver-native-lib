@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.neo4j.examples</groupId>
+	<artifactId>driver-native-lib</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>driver-native-lib</name>
+	<description>Project compiling neo4j driver nativly and using it as a shared library</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<neo4j-java-driver.version>4.1.1</neo4j-java-driver.version>
+		<graalvm.version>20.1.0</graalvm.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.neo4j.driver</groupId>
+			<artifactId>neo4j-java-driver</artifactId>
+			<version>${neo4j-java-driver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.sdk</groupId>
+			<artifactId>graal-sdk</artifactId>
+			<version>${graalvm.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.graalvm.nativeimage</groupId>
+				<artifactId>native-image-maven-plugin</artifactId>
+				<version>${graalvm.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>native-image</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<buildArgs>--no-fallback -H:+ReportExceptionStackTraces -H:EnableURLProtocols=http,https --enable-all-security-services -H:+JNI --shared -H:Name=libneo4j</buildArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
