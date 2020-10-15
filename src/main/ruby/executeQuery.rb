@@ -4,6 +4,18 @@
 #
 # gem install ffi
 # ruby src/main/ruby/executeQuery.rb
+#
+# Or run a custom query with the following call
+=begin
+
+ruby src/main/ruby/executeQuery.rb query=" \
+  MATCH (tom:Person {name:'Tom Hanks'})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors),  \
+        (coActors)-[:ACTED_IN]->(m2)<-[:ACTED_IN]-(cocoActors)                     \
+  WHERE NOT (tom)-[:ACTED_IN]->()<-[:ACTED_IN]-(cocoActors) AND tom <> cocoActors  \
+  RETURN cocoActors.name AS Recommended, count(*) AS Strength ORDER BY Strength DESC"
+
+=end
+# Taken from the `:play movies` example
 
 require 'ffi'
 
@@ -51,4 +63,21 @@ module LibNeo4j extend FFI::Library
   end
 end
 
-LibNeo4j.execute_query('bolt://localhost:7687', 'secret', 'MATCH (m:Movie) RETURN m')
+uri = 'bolt://localhost:7687'
+password = 'secret'
+query = 'MATCH (m:Movie) RETURN m'
+
+ARGV.each do |arg|
+  pair = arg.split("=")
+  next if pair.length != 2
+  case pair[0].strip
+  when "uri"
+    uri = pair[1]
+  when "password"
+    password = pair[1]
+  when "query"
+    query = pair[1]
+  end
+end
+
+LibNeo4j.execute_query(uri, password, query)
