@@ -15,11 +15,12 @@ and looks like this:
 public static long executeQuery(
     IsolateThread isolate, CCharPointer uri, CCharPointer password, CCharPointer query
 ) {
+    // Some interaction with the driver and Neo4j.
     return 4711L;
 }
 ```
 
-The `@CEntryPoint` defines a the entrypoint. Non trivial types are passed as pointers from the outside.
+The `@CEntryPoint` defines the entrypoint. Non trivial types are passed as pointers from the outside.
 The `IsolateThread` is a control structure *required* as first argument by GraalVM.
 
 The last ingredience to create a shared library is the appropriate flag to the `native-image` tool:
