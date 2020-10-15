@@ -74,8 +74,6 @@ gu list
 ./mvnw clean package 
 ```
 
-Choose either `` or `src/main/ruby` for your next step.
-
 #### Usage from C
 
 Please have a look at [`src/main/c/executeQuery.c`](https://github.com/michael-simons/neo4j-java-driver-native-lib/blob/master/src/main/c/executeQuery.c). 
