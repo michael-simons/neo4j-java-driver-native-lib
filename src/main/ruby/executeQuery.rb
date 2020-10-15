@@ -28,7 +28,7 @@ module LibNeo4j extend FFI::Library
 
   attach_function :graal_create_isolate, [ GRAAL_CREATE_ISOLATE_PARAMS_T.by_ref, :pointer, :pointer], :int
   attach_function :graal_detach_thread, [ :pointer ], :int  
-  attach_function :ffi_execute_query, :execute_query, [:pointer, :string, :string, :string, ], :long
+  attach_function :ffi_execute_query, :execute_query, [:pointer, :string, :string, :string ], :long
     
   class << self
     def execute_query(uri, password, query)
