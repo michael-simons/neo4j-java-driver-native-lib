@@ -175,7 +175,7 @@ public final class DriverNativeLib {
 	 * @param string
 	 * @return
 	 */
-	static CCharPointer toCCharPointer(String string) {
+	private static CCharPointer toCCharPointer(String string) {
 		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
 		CCharPointer charPointer = UnmanagedMemory.calloc((bytes.length + 1) * SizeOf.get(CCharPointer.class));
 		for (int i = 0; i < bytes.length; ++i) {
