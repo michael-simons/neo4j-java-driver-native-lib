@@ -27,8 +27,8 @@ int main(void) {
 	int count = execute_query_and_print_results(thread, "bolt://localhost:7687", "secret", "MATCH (m:Movie) RETURN m");
 	fprintf(stdout, "Number of movies printed: %d\n", count);
 	
-	if (graal_detach_thread(thread) != 0) {
-	  fprintf(stderr, "graal_detach_thread error\n");
-	  return 1;
-	}
+    if (graal_detach_thread(thread) != 0) {
+        fprintf(stderr, "graal_detach_thread error\n");
+        return 1;
+    }
 }
