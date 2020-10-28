@@ -177,12 +177,12 @@ public final class DriverNativeLib {
 	 */
 	static CCharPointer toCCharPointer(String string) {
 		byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
-		CCharPointer returnedNodes = UnmanagedMemory.calloc((bytes.length + 1) * SizeOf.get(CCharPointer.class));
+		CCharPointer charPointer = UnmanagedMemory.calloc((bytes.length + 1) * SizeOf.get(CCharPointer.class));
 		for (int i = 0; i < bytes.length; ++i) {
-			returnedNodes.write(i, bytes[i]);
+			charPointer.write(i, bytes[i]);
 		}
-		returnedNodes.write(bytes.length, (byte) 0);
-		return returnedNodes;
+		charPointer.write(bytes.length, (byte) 0);
+		return charPointer;
 	}
 
 	@CEntryPoint(name = "free_results")
