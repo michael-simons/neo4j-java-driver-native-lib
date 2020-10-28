@@ -35,6 +35,8 @@ int main(void) {
         fprintf(stdout, "(%ld:%s name:%s) \n", nodes[i].id, nodes[i].label, nodes[i].name);
     }
 
+    free_results(thread, nodes, numResults);
+
     if (graal_detach_thread(thread) != 0) {
         fprintf(stderr, "graal_detach_thread error\n");
         return 1;
