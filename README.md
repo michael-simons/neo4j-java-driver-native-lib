@@ -11,8 +11,8 @@ The entry point to the shared library is defined in `org.neo4j.examples.driverna
 and looks like this:
 
 ```java
-@CEntryPoint(name = "execute_query")
-public static long executeQuery(
+@CEntryPoint(name = "execute_query_and_print_results")
+public static long executeQueryAndPrintResults(
     IsolateThread isolate, CCharPointer uri, CCharPointer password, CCharPointer query
 ) {
     // Some interaction with the driver and Neo4j.
@@ -89,13 +89,13 @@ Target: x86_64-apple-darwin19.6.0
 On macOS: Compile from the project roots with
 
 ```
-gcc -Wall -Ltarget -Itarget target/libneo4j.dylib src/main/c/executeQuery.c -o target/executeQuery
+gcc -Wall -Isrc/main/native -Ltarget -Itarget target/libneo4j.dylib src/main/c/executeQueryAndPrintResults.c -o target/executeQueryAndPrintResults
 ```
 
 And run as
 
 ```
-target/executeQuery
+target/executeQueryAndPrintResults
 ```
 
 #### Usage from Ruby
@@ -112,5 +112,5 @@ You need to have the Ruby `ffi` gem installed (via `gem install ffi`).
 With FFI in place, run the script like this (from the root of this repository):
 
 ```
-ruby src/main/ruby/executeQuery.rb
+ruby src/main/ruby/executeQueryAndPrintResults.rb
 ```

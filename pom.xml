@@ -7,7 +7,7 @@
 	<artifactId>driver-native-lib</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>driver-native-lib</name>
-	<description>Project compiling neo4j driver nativly and using it as a shared library</description>
+	<description>Project compiling neo4j driver natively and using it as a shared library</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -26,10 +26,18 @@
 			<artifactId>neo4j-java-driver</artifactId>
 			<version>${neo4j-java-driver.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.graalvm.sdk</groupId>
 			<artifactId>graal-sdk</artifactId>
 			<version>${graalvm.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.nativeimage</groupId>
+			<artifactId>svm</artifactId>
+			<version>${graalvm.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -48,7 +56,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<buildArgs>--no-fallback -H:+ReportExceptionStackTraces -H:EnableURLProtocols=http,https --enable-all-security-services -H:+JNI --shared -H:Name=libneo4j</buildArgs>
+					<buildArgs>--no-fallback -H:+ReportExceptionStackTraces -H:EnableURLProtocols=http,https --enable-all-security-services -H:+JNI -H:CLibraryPath=${project.basedir}/src/main/c --shared -H:Name=libneo4j</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>

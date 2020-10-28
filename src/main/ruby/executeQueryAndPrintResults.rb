@@ -3,7 +3,7 @@
 # ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin19]
 #
 # gem install ffi
-# ruby src/main/ruby/executeQuery.rb
+# ruby src/main/ruby/executeQueryAndPrintResults.rb
 #
 # Or run a custom query with the following call
 =begin
@@ -40,10 +40,10 @@ module LibNeo4j extend FFI::Library
 
   attach_function :graal_create_isolate, [ GRAAL_CREATE_ISOLATE_PARAMS_T.by_ref, :pointer, :pointer], :int
   attach_function :graal_detach_thread, [ :pointer ], :int  
-  attach_function :ffi_execute_query, :execute_query, [:pointer, :string, :string, :string ], :long
+  attach_function :ffi_execute_query, :execute_query_and_print_results, [:pointer, :string, :string, :string ], :long
     
   class << self
-    def execute_query(uri, password, query)
+    def execute_query_and_print_results(uri, password, query)
 
       isolate_params = GRAAL_CREATE_ISOLATE_PARAMS_T.new
 
@@ -80,4 +80,4 @@ ARGV.each do |arg|
   end
 end
 
-LibNeo4j.execute_query(uri, password, query)
+LibNeo4j.execute_query_and_print_results(uri, password, query)
